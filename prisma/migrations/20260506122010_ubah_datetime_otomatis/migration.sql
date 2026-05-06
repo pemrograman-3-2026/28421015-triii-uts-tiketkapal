@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `jadwals` MODIFY `tanggal_berangkat` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3);

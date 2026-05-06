@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String
+  creted_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+
+model Penumpang { 
+id Int @id @default(autoincrement())
+username String
+no_hp String
+email String
+reated_at DateTime @default(now())
+updated_at DateTime @updatedAt
+pemesanan Pemesanan[]
+
+@@map("penumpangs")
+
+}
+
+model Kapal { 
+  id_kapal Int @id @default(autoincrement())
+  nama_kapal String
+  kapasitas String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  
+  @@map("kapals") //ini nama tabel
+}
+
+
+model Jadwal {
+  id_jadwal Int @id @default(autoincrement())
+  id_kapal Int
+  asal String 
+  tujuan String 
+  tanggal_berangkat DateTime @default(now())
+  jam_berangkat String
+  harga String 
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  pemesanan Pemesanan[]
+
+  @@map("jadwals")
+}
+
+
+model Pemesanan {
+  id_pemesanan Int @id @default(autoincrement())
+  id_penumpang Int
+  id_jadwal Int
+  tanggal_pesan DateTime  @default(now())
+  jumlah_tiket Int
+  total_bayar String
+  status String
+  created_at DateTime @default(now())
+  updated_at DateTime  @updatedAt
+  penumpang Penumpang @relation(fields: [id_penumpang], references: [id])
+  jadwal Jadwal @relation(fields: [id_jadwal], references: [id_jadwal])
+  tiket Tiket[]
+
+  @@map("pemesanans")
+
+}
+
+model Tiket {
+  id_tiket Int @id @default(autoincrement())
+  id_pemesanan Int
+  no_kursi String
+  created_at DateTime @default(now())
+  pemesanan Pemesanan @relation(fields: [id_pemesanan], references: [id_pemesanan])
+
+  @@map("tikets")
+
+
+  
+}
