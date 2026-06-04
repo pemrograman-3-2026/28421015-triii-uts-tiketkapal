@@ -5,9 +5,15 @@ import jadwalRoute from './routes/jadwal.route.js'
 import PemesananRoute from './routes/pemesanan.route.js'
 import TiketRoute from './routes/tiket.route.js'
 import UserRoute from './routes/user.route.js'
+import path from 'path'
+import cors from 'cors'
 
 const app = express()
 app.use(express.json())
+
+const imagePath = express.static(path.join(process.cwd(), 'uploads'))
+app.use('/image', imagePath)
+app.use(cors())
 
 app.get('/', (req, res) => {
     res.send("Helloworld!")

@@ -1,12 +1,12 @@
-import express from "express"
-import { create, getById,getALL,update,destroy } from "../controllers/kapal.controller.js"
+import express, { Router } from "express"
+import { create, getALLKapal, getKapalById, updateKapal, deleteKapal } from "../controllers/kapal.controller.js"
 
-const router = express.Router()
-router.post('/create',create)
-router.post('/getById',getById)
-router.post('/getALL',getALL)
-router.post('/update',update)
-router.post('/delate',destroy)
+const router = Router()
+router.post('/create', create)
+router.get('/get-ALL', getALLKapal)
+router.get('/get/:id', getKapalById)
+router.put('/update/:id', updateKapal)
+router.delete('/delete/:id', deleteKapal)
 
 
 

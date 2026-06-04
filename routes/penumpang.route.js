@@ -1,12 +1,13 @@
-import express from "express"
-import { create, getById,getALL,update,destroy } from "../controllers/penumpang.controller.js"
+import express, { Router } from "express"
+import { create, deletePenumpang, getALLPenumpang, getPenumpangById, updatePenumpang,} from "../controllers/penumpang.controller.js"
 
-const router = express.Router()
-router.post('/create',create)
-router.post('/getById',getById)
-router.post('/getALL',getALL)
-router.post('/update',update)
-router.post('/delate',destroy)
+const router = Router()
+router.post('/create', create)
+router.get('/get-ALL', getALLPenumpang)
+router.get('/get/:id', getPenumpangById)
+router.put('/update/:id', updatePenumpang)
+router.delete('/delete/:id', deletePenumpang)
+
 
 
 export default router

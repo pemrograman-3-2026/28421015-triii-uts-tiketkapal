@@ -21,87 +21,54 @@ export const create = async (req,res) => {
 
 }
 
-export const getById = async (req,res) => {
-    const id =req.body.id
-    const penumpang = await prisma.penumpang.findUnique({
+export const getALLPenumpang = async (req, res) => {
+    const data = await prisma.penumpang.findMany()
+
+    res.json(data)
+}
+
+
+export const getPenumpangById = async (req, res) => {
+
+    const id = req.params.id
+
+    const data = await prisma.penumpang.findUnique({
         where : {
             id: Number(id)
+        }
+    })
+
+res.json(data)
+
+}
+
+export const updatePenumpang = async (req, res) => {
+    const id = Number(req.params.id)
+
+    await prisma.penumpang.update({
+        where: {
+            id: id
         },
-        include: {
-            pemesanan:true
-        }
+        data: req.body
     })
-    if (!penumpang){
-        return res.status(400).json({
-            message : "data tidak ditemukan"
-        })
-    }
-     return res.json({
-        message : "berhasil mengambil data",
-        data : penumpang
+
+    res.json({
+        message: 'Data was updated successfully'
     })
 }
 
-export const getALL =  async (req,res) => {
-    const penumpang = await prisma.penumpang.findMany({
-        include: {
-            pemesanan:true
+
+export const deletePenumpang = async (req, res) => {
+    const id = Number(req.params.id)
+
+    await prisma.penumpang.delete({
+        where:{
+           id: id
         }
     })
 
-     return res.json({
-        message : "berhasil mengambil semua data",
-        data : penumpang
+    res.json({
+        message: 'data was deleted'
     })
 }
 
-export const update = async (req,res) => {
-    try {
-        const { id, username, no_hp, email } = req.body
-
-        const updatePenumpang = await prisma.penumpang.update({
-            where: {
-                id: Number(id)
-            },
-            data: {
-                username: username,
-                no_hp: no_hp,
-                email: email
-            }, 
-            include: {
-                pemesanan:true
-            }
-        })
-
-       return res.json({
-            message: "data berhasil diperbarui",
-            data: updatePenumpang
-        })
-
-    } catch (error) {
-        
-       return res.status(400).json({
-            message: "data gagal diperbarui, id tidak ditemukan "
-        })
-    }
-}
-
-export const destroy = async (req, res) => {
-    try {
-        const { id } = req.body
-
-        await prisma.penumpang.delete({
-            where: {
-                id: Number(id)
-            }
-        })
-
-        return res.json({
-            message: "Data kamar berhasil dihapus"
-        })
-    } catch (error) {
-        return res.status(400).json({
-            message: "Gagal menghapus, ID tidak ditemukan"
-        })
-    }
-}

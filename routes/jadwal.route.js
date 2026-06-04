@@ -1,14 +1,12 @@
-import express from "express"
-import { create, getById,getALL,update,destroy } from "../controllers/jadwal.controller.js"
+import express, { Router } from "express"
+import { create, updateJadwal, deleteJadwal, getJadwalById, getALLJadwal } from "../controllers/jadwal.controller.js"
 
-const router = express.Router()
-router.post('/create',create)
-router.post('/getById',getById)
-router.post('/getALL',getALL)
-router.post('/update',update)
-router.post('/delate',destroy)
-
-
+const router = Router()
+router.post('/create', create)
+router.get('/get-ALL', getALLJadwal)
+router.get('/get/:id', getJadwalById)
+router.put('/update/:id', updateJadwal)
+router.delete('/delete/:id', deleteJadwal)
 
 
 export default router

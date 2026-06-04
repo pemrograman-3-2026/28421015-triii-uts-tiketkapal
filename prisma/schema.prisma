@@ -79,6 +79,7 @@ model Tiket {
   id_tiket Int @id @default(autoincrement())
   id_pemesanan Int
   no_kursi String
+  image String
   created_at DateTime @default(now())
   pemesanan Pemesanan @relation(fields: [id_pemesanan], references: [id_pemesanan])
 
