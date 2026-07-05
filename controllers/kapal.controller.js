@@ -32,7 +32,7 @@ export const getKapalById = async (req, res) => {
 
     const data = await prisma.kapal.findUnique({
         where : {
-            id_kapal : Number(id_kapal)
+            id : Number(id_kapal)
         }
     })
 
@@ -45,7 +45,7 @@ export const updateKapal = async (req, res) => {
 
     await prisma.id_kapal.update({
         where: {
-            id_kapal : id_kapal
+            id : id_kapal
         },
         data: req.body
     })
@@ -61,7 +61,7 @@ export const deleteKapal = async (req, res) => {
 
     await prisma.kapal.delete({
         where:{
-           id_kapal : id_kapal
+           id : id_kapal
         }
     })
 

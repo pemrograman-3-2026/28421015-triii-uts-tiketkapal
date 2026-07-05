@@ -5,9 +5,9 @@ export const create = async (req,res) => {
 
     await prisma.pemesanan.create({
         data : {
-            id_penumpang : body.id_penumpang,
-            id_jadwal : body.id_jadwal,
-            jumlah_tiket : body.jumlah_tiket,
+            id_penumpang : Number(body.id_penumpang),
+            id_jadwal : Number(body.id_jadwal),
+            jumlah_tiket : Number(body.jumlah_tiket),
             total_bayar : body.total_bayar,
             status : body.status
              }
@@ -23,7 +23,12 @@ export const create = async (req,res) => {
 }
 
 export const getALLPemesanan = async (req, res) => {
-    const data = await prisma.pemesanan.findMany()
+    const data = await prisma.pemesanan.findMany({
+        include: {
+            penumpang: true,
+            jadwal: true
+        }
+    })
 
     res.json(data)
 }

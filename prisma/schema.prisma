@@ -8,10 +8,16 @@ datasource db {
 
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 model User {
   id Int @id @default(autoincrement())
   username String @unique
   password String
+  role Role @default(ADMIN)
   creted_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
@@ -31,7 +37,7 @@ pemesanan Pemesanan[]
 }
 
 model Kapal { 
-  id_kapal Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   nama_kapal String
   kapasitas String
   created_at DateTime @default(now())
@@ -43,7 +49,6 @@ model Kapal {
 
 model Jadwal {
   id_jadwal Int @id @default(autoincrement())
-  id_kapal Int
   asal String 
   tujuan String 
   tanggal_berangkat DateTime @default(now())
@@ -67,8 +72,8 @@ model Pemesanan {
   status String
   created_at DateTime @default(now())
   updated_at DateTime  @updatedAt
-  penumpang Penumpang @relation(fields: [id_penumpang], references: [id])
-  jadwal Jadwal @relation(fields: [id_jadwal], references: [id_jadwal])
+  penumpang Penumpang @relation(fields: [id_penumpang], references: [id], onDelete: Cascade)
+  jadwal Jadwal @relation(fields: [id_jadwal], references: [id_jadwal], onDelete: Cascade)
   tiket Tiket[]
 
   @@map("pemesanans")
@@ -81,7 +86,7 @@ model Tiket {
   no_kursi String
   image String
   created_at DateTime @default(now())
-  pemesanan Pemesanan @relation(fields: [id_pemesanan], references: [id_pemesanan])
+  pemesanan Pemesanan @relation(fields: [id_pemesanan], references: [id_pemesanan], onDelete: Cascade)
 
   @@map("tikets")
 

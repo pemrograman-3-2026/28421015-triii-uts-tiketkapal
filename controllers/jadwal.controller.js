@@ -5,7 +5,6 @@ export const create = async (req,res) => {
 
     await prisma.jadwal.create({
         data : {
-            id_kapal : Number (body.id_kapal),
             asal : body.asal,
             tujuan : body.tujuan,
             jam_berangkat : body.jam_berangkat,

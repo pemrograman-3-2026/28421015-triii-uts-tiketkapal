@@ -29,7 +29,11 @@ export const create = async (req,res) => {
 
 
 export const getALLTiket = async (req, res) => {
-    const data = await prisma.tiket.findMany()
+    const data = await prisma.tiket.findMany({
+      include: {
+         pemesanan: true
+      }
+    })
 
     res.json(data)
 }

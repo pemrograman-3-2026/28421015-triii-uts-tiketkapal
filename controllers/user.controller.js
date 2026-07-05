@@ -57,10 +57,24 @@ export const login = async (req, res) => {
         })
     }
 
+    const dataSession = JSON.stringify({
+        username,
+        role: isUsernameExist.role
+    })
+
+    res.cookie('user', dataSession, {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'lax',
+        path: "/",
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    })
+
     return res.json ({
         message: 'Login Successfully',
         data: {
-            username:isUsernameExist.username
+            username:isUsernameExist.username,
+            role: isUsernameExist.role
         }
     })
 }

@@ -13,7 +13,10 @@ app.use(express.json())
 
 const imagePath = express.static(path.join(process.cwd(), 'uploads'))
 app.use('/image', imagePath)
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}))
 
 app.get('/', (req, res) => {
     res.send("Helloworld!")
@@ -26,6 +29,6 @@ app.use('/pemesanan', PemesananRoute)
 app.use('/tiket', TiketRoute)
 app.use('/user', UserRoute)
 
-app.listen(3000, () => {
+app.listen(3100, () => {
     console.log('server started')
 })
